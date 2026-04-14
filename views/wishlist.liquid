@@ -18,13 +18,26 @@
 
 {% if likedProducts.size > 0 %}
   <section id="wishlist" class="wishlist-grid">
+
     {% for product in likedProducts %}
       <div class="product-card small" id="wishlist-product-{{ product.id }}">
+
         <img src="{{ product.image }}" alt="{{ product.name }}">
         <h3>{{ product.name }}</h3>
         <p>€{{ product.amount }}</p>
+
+        <!-- REMOVE BUTTON -->
+        <form action="/remove" method="POST" class="remove-form">
+          <input type="hidden" name="product_id" value="{{ product.id }}">
+
+          <button type="submit" class="remove-button">
+            🗑️ Remove
+          </button>
+        </form>
+
       </div>
     {% endfor %}
+
   </section>
 {% else %}
   <p>Je hebt nog geen producten in je wishlist.</p>

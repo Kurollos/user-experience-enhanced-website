@@ -289,6 +289,24 @@ body {
   font-weight: bold;
 }
 
+.remove-form {
+  margin-top: 10px;
+}
+
+.remove-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.remove-button:hover {
+  background: #b52a37;
+}
+
 /* =====================
    Footer
 ===================== */

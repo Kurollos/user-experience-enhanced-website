@@ -155,6 +155,44 @@ app.get('/wishlist', async function (req, res) {
 });
 
 // ====================
+// POST ROUTE (REMOVE FROM WISHLIST)
+// ====================
+app.post('/remove', async function (req, res) {
+  const userId = 62;
+  const productId = req.body.product_id;
+
+  try {
+    // zoek relatie record
+    const checkResponse = await fetch(
+      `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1?filter[milledoni_users_id][_eq]=${userId}&filter[milledoni_products_id][_eq]=${productId}`
+    );
+
+    const checkData = await checkResponse.json();
+
+    if (checkData.data.length === 0) {
+      return res.redirect(303, '/wishlist?status=error');
+    }
+
+    const relationId = checkData.data[0].id;
+
+    // delete uit Directus
+    await fetch(
+      `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1/${relationId}`,
+      {
+        method: "DELETE"
+      }
+    );
+
+    return res.redirect(303, '/wishlist?status=removed');
+
+  } catch (err) {
+    console.error(err);
+    return res.redirect(303, '/wishlist?status=error');
+  }
+});
+
+
+// ====================
 // SERVER STARTEN
 // ====================
 app.listen(port, () => {
