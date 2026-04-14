@@ -203,6 +203,91 @@ body {
   width: 30px;
   height: 30px;
 }
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 20px 30px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+
+  z-index: 999;
+
+  /* animatie */
+  animation: popupFade 3s ease forwards;
+}
+
+/* kleuren */
+.success {
+  background-color: #28a745;
+}
+
+.error {
+  background-color: #dc3545;
+}
+
+/* animatie */
+@keyframes popupFade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+}
+
+/* =====================
+   WISHLIST GRID
+===================== */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+/* kleinere product cards */
+.product-card.small {
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* kleinere afbeelding */
+.product-card.small img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* tekst kleiner */
+.product-card.small h3 {
+  font-size: 0.9rem;
+  margin: 8px 0 4px;
+}
+
+.product-card.small p {
+  font-size: 0.85rem;
+  color: #f4c542;
+  font-weight: bold;
+}
 
 /* =====================
    Footer
