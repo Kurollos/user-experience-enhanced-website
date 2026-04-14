@@ -18,6 +18,7 @@
       <ul>
         <li><a href="/cadeaus">Cadeaus</a></li>
         <li><a href="/categorieën">Categorieën</a></li>
+        <li><a href="/wishlist">Wishlist</a></li>
       </ul>
     </nav>
   </section>
@@ -86,8 +87,25 @@
         <article class="product-card">
 
           <section class="product-image">
-            <img src="{{ product.img | default: product.image }}" alt="{{ product.name }}">
-  
+   <img src="{{ product.img | default: product.image }}" alt="{{ product.name }}">
+
+  <form action="/like" method="POST" class="save-form">
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    
+    <button class="save-button" type="submit">
+      <img class="save-icon" src="/assets/button.png" alt="save">
+    </button>
+  </form>
+</section>
+
+{% if status == "success" %}
+  <div class="popup success">🎁 Gift is saved!</div>
+{% endif %}
+
+{% if status == "error" %}
+  <div class="popup error">❌ This gift is already saved</div>
+{% endif %}
+
           <section class="product-info">
             <h2>{{ product.name }}</h2>
             <p class="prijs">€{{ product.amount }}</p>
