@@ -1,4 +1,3 @@
-// server.js
 import express from 'express';
 import { Liquid } from 'liquidjs';
 import path from 'path';
@@ -10,8 +9,6 @@ const port = process.env.PORT || 8000;
 // MIDDLEWARE
 // ====================
 app.use(express.urlencoded({ extended: true }));
-
-// static files (zorg dat /assets bestaat!)
 app.use(express.static('assets'));
 
 // ====================
@@ -35,7 +32,7 @@ app.get('/', async function (req, res) {
     fields: "id,name,image,amount"
   };
 
-  // filters
+  // FILTERS
   if (req.query.price) {
     params["filter[amount][_between]"] = "0," + req.query.price;
   }
@@ -55,14 +52,15 @@ app.get('/', async function (req, res) {
   params["sort"] = "id";
 
   try {
-    // producten ophalen
+    //  producten ophalen
     const productResponse = await fetch(
       "https://fdnd-agency.directus.app/items/milledoni_products/?" +
       new URLSearchParams(params)
     );
+
     const productData = await productResponse.json();
 
-    // wishlist ophalen (voor groene knop)
+    //  wishlist ophalen
     const userResponse = await fetch(
       `https://fdnd-agency.directus.app/items/milledoni_users/${userId}/?fields=liked_products.milledoni_products_id.id`
     );
@@ -73,10 +71,14 @@ app.get('/', async function (req, res) {
       item => item.milledoni_products_id.id
     );
 
+    //  wishlist count
+    const wishlistCount = likedProducts.length;
+
     res.render("index.liquid", {
       products: productData.data,
       likedProducts,
-      status: req.query.status // 👈 voor popup
+      wishlistCount,
+      status: req.query.status
     });
 
   } catch (error) {
@@ -93,7 +95,7 @@ app.post('/like', async function (req, res) {
   const productId = req.body.product_id;
 
   try {
-    // check duplicate
+    //  check duplicate
     const checkResponse = await fetch(
       `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1?filter[milledoni_users_id][_eq]=${userId}&filter[milledoni_products_id][_eq]=${productId}`
     );
@@ -104,7 +106,7 @@ app.post('/like', async function (req, res) {
       return res.redirect(303, '/?status=error');
     }
 
-    // toevoegen
+    //  opslaan
     await fetch(
       "https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1",
       {
@@ -128,6 +130,43 @@ app.post('/like', async function (req, res) {
 });
 
 // ====================
+//  REMOVE ROUTE (NIEUW + FIX)
+// ====================
+app.post('/remove', async function (req, res) {
+  const userId = 62;
+  const productId = req.body.product_id;
+
+  try {
+    // zoek relation in pivot table
+    const checkResponse = await fetch(
+      `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1?filter[milledoni_users_id][_eq]=${userId}&filter[milledoni_products_id][_eq]=${productId}`
+    );
+
+    const checkData = await checkResponse.json();
+
+    if (checkData.data.length === 0) {
+      return res.redirect('/wishlist?status=error');
+    }
+
+    const relationId = checkData.data[0].id;
+
+    // delete uit Directus
+    await fetch(
+      `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1/${relationId}`,
+      {
+        method: "DELETE"
+      }
+    );
+
+    return res.redirect('/wishlist?status=removed');
+
+  } catch (error) {
+    console.error(error);
+    return res.redirect('/wishlist?status=error');
+  }
+});
+
+// ====================
 // GET ROUTE (WISHLIST)
 // ====================
 app.get('/wishlist', async function (req, res) {
@@ -144,8 +183,9 @@ app.get('/wishlist', async function (req, res) {
       item => item.milledoni_products_id
     );
 
-    res.render('wishlist.liquid', {
-      likedProducts
+    res.render("wishlist.liquid", {
+      likedProducts,
+      status: req.query.status
     });
 
   } catch (error) {
@@ -153,44 +193,6 @@ app.get('/wishlist', async function (req, res) {
     res.status(500).send("Fout bij laden wishlist");
   }
 });
-
-// ====================
-// POST ROUTE (REMOVE FROM WISHLIST)
-// ====================
-app.post('/remove', async function (req, res) {
-  const userId = 62;
-  const productId = req.body.product_id;
-
-  try {
-    // zoek relatie record
-    const checkResponse = await fetch(
-      `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1?filter[milledoni_users_id][_eq]=${userId}&filter[milledoni_products_id][_eq]=${productId}`
-    );
-
-    const checkData = await checkResponse.json();
-
-    if (checkData.data.length === 0) {
-      return res.redirect(303, '/wishlist?status=error');
-    }
-
-    const relationId = checkData.data[0].id;
-
-    // delete uit Directus
-    await fetch(
-      `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1/${relationId}`,
-      {
-        method: "DELETE"
-      }
-    );
-
-    return res.redirect(303, '/wishlist?status=removed');
-
-  } catch (err) {
-    console.error(err);
-    return res.redirect(303, '/wishlist?status=error');
-  }
-});
-
 
 // ====================
 // SERVER STARTEN
