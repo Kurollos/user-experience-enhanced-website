@@ -1,0 +1,224 @@
+/* =====================
+   Algemene reset en basis
+===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: #f8f8f8;
+  color: #222;
+  line-height: 1.5;
+}
+
+/* =====================
+   Header
+===================== */
+.site-header {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 15px 0;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.site-header .logo img {
+  height: 50px;
+}
+
+.site-header .main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.site-header .main-nav a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+}
+
+.site-header .main-nav a:hover {
+  color: #f4c542;
+}
+
+/* =====================
+   Layout container
+===================== */
+.categoriepagina .container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* =====================
+   Sidebar
+===================== */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar .chatbot,
+.sidebar .filter-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Chat */
+.chat-window {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.chat-window .message {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  max-width: 80%;
+}
+
+.chat-window .bot {
+  background-color: #f0f0f0;
+}
+
+.chat-window .user {
+  background-color: #f4c542;
+  color: #fff;
+}
+
+/* Chat input */
+.chat-input form {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+}
+
+.chat-input button {
+  background-color: #f4c542;
+  border: none;
+  padding: 0 15px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+/* Filters */
+.filter-card h2 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.filter-card select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* =====================
+   Product grid
+===================== */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-image img {
+  width: 100%;
+}
+
+.product-info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-info h2 {
+  font-size: 1rem;
+}
+
+.prijs {
+  color: #f4c542;
+  font-weight: bold;
+}
+
+.button {
+  margin-top: auto;
+  background-color: #f4c542;
+  color: #fff;
+  border-radius: 25px;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #e0b838;
+}
+
+/* Save button */
+.product-image {
+  position: relative;
+}
+
+.save-form {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.save-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* =====================
+   Footer
+===================== */
+footer {
+  background-color: #222;
+  color: #fff;
+  padding: 30px 0;
+  text-align: center;
+}
+
+footer a {
+  color: #f4c542;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
