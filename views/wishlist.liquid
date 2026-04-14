@@ -1,0 +1,31 @@
+<h1>Mijn Wishlist</h1>
+<link rel="stylesheet" href="/style.css">
+
+<header class="site-header">
+  <section class="container">
+    <a href="/" class="logo">
+      <img src="{{ 'milledoni.png' | assets_url }}" alt="Milledoni">
+    </a>      
+    <nav class="main-nav">
+      <ul>
+        <li><a href="/cadeaus">Cadeaus</a></li>
+        <li><a href="/categorieën">Categorieën</a></li>
+        <li><a href="/wishlist">Wishlist</a></li>
+      </ul>
+    </nav>
+  </section>
+</header>
+
+{% if likedProducts.size > 0 %}
+  <section id="wishlist" class="wishlist-grid">
+    {% for product in likedProducts %}
+      <div class="product-card small" id="wishlist-product-{{ product.id }}">
+        <img src="{{ product.image }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>€{{ product.amount }}</p>
+      </div>
+    {% endfor %}
+  </section>
+{% else %}
+  <p>Je hebt nog geen producten in je wishlist.</p>
+{% endif %}
