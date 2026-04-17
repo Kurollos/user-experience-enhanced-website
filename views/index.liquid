@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Milledoni Cadeaus</title>
+
   <link rel="stylesheet" href="/style.css">
-  <script src="/script.js"></script>
+  <script src="/script.js" defer></script>
 </head>
 
 <body>
@@ -13,7 +14,15 @@
 <header class="site-header">
   <section class="container">
     <a href="/" class="logo">
-      <img src="{{ 'milledoni.png' | assets_url }}" alt="Milledoni">
+
+      <img
+        src="{{ 'milledoni.png' | assets_url }}"
+        width="100"
+        height="40"
+        loading="eager"
+        alt="Milledoni"
+      >
+
     </a>
 
     <nav class="main-nav">
@@ -21,7 +30,6 @@
         <li><a href="/cadeaus">Cadeaus</a></li>
         <li><a href="/categorieën">Categorieën</a></li>
 
-        <!--  WISHLIST BADGE FIX -->
         <li>
           <a href="/wishlist">
             Wishlist
@@ -39,10 +47,8 @@
 <main class="categoriepagina">
   <section class="container">
 
-    <!-- Sidebar -->
     <div class="sidebar">
 
-      <!-- Chatbot -->
       <section class="chatbot">
         <section class="chat-window">
           <p class="message bot">Hallo! Waar kan ik je mee helpen?</p>
@@ -52,55 +58,73 @@
         <section class="chat-input">
           <form>
             <input type="text" placeholder="Ik ben op zoek naar een cadeau voor..." />
-            <button type="submit"><img src="" alt=""></button>
+            <button type="submit">Send</button>
           </form>
         </section>
       </section>
 
-      <!-- FILTER FORM -->
-    <form id="filterForm" action="/" method="get">
+      <form id="filterForm" action="/" method="get">
 
-  <section class="filter-card">
-    <h2>Price range (€)</h2>
+        <section class="filter-card">
+          <h2>Price range (€)</h2>
 
-    <select name="price">
-      <option value="">All</option>
-      <option value="10">Under €10</option>
-      <option value="20">Under €20</option>
-      <option value="50">Under €50</option>
-    </select>
+          <select name="price">
+            <option value="">All</option>
+            <option value="10">Under €10</option>
+            <option value="20">Under €20</option>
+            <option value="50">Under €50</option>
+          </select>
 
-  </section>
+        </section>
 
-  <button type="submit">Apply Filters</button>
+        <button type="submit">Apply Filters</button>
 
-</form>
+      </form>
     </div>
 
-    <!-- POPUP (BELANGRIJK: buiten loop!) -->
+    <!-- POPUPS -->
     {% if status == "success" %}
-      <div class="popup success"> Gift is saved!</div>
+      <div class="popup success">Gift is saved!</div>
     {% endif %}
 
     {% if status == "error" %}
-      <div class="popup error"> This gift is already saved</div>
+      <div class="popup error">This gift is already saved</div>
     {% endif %}
 
-    <!-- PRODUCTEN -->
+    <!-- PRODUCT GRID -->
     <section class="product-grid">
+
       {% for product in products %}
+
+        {% assign img = product.img | default: product.image %}
+
         <article class="product-card">
 
           <section class="product-image">
-            <img src="{{ product.img | default: product.image }}" alt="{{ product.name }}">
+
+            <img
+              src="{{ img }}?width=600&quality=80&format=webp"
+              srcset="
+                {{ img }}?width=300&quality=80&format=webp 300w,
+                {{ img }}?width=600&quality=80&format=webp 600w,
+                {{ img }}?width=900&quality=80&format=webp 900w
+              "
+              sizes="(max-width: 600px) 300px, 600px"
+              width="300"
+              height="300"
+              loading="lazy"
+              alt="{{ product.name }}"
+            >
 
             <form action="/like" method="POST" class="save-form">
               <input type="hidden" name="product_id" value="{{ product.id }}">
 
               <button class="save-button" type="submit">
-                <img class="save-icon" src="/button.png" alt="save">
+                <img src="/button.png" width="40" height="40" alt="save">
               </button>
+
             </form>
+
           </section>
 
           <section class="product-info">
@@ -112,18 +136,30 @@
             </p>
 
             <p class="spotter">
+
               Spotter:
+
               {% if product.spotter_img %}
-                <img src="{{ product.spotter_img }}" alt="{{ product.spotter }}">
+                <img
+                  src="{{ product.spotter_img }}"
+                  width="32"
+                  height="32"
+                  loading="lazy"
+                  alt="{{ product.spotter }}"
+                >
               {% endif %}
+
               {{ product.spotter }}
+
             </p>
 
             <a href="/product/{{ product.slug }}" class="button">Bekijk product</a>
           </section>
 
         </article>
+
       {% endfor %}
+
     </section>
 
   </section>

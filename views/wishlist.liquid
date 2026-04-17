@@ -1,11 +1,21 @@
 <h1>Mijn Wishlist</h1>
+
 <link rel="stylesheet" href="/style.css">
 
 <header class="site-header">
   <section class="container">
     <a href="/" class="logo">
-      <img src="{{ 'milledoni.png' | assets_url }}" alt="Milledoni">
-    </a>      
+
+      <img
+        src="{{ 'milledoni.png' | assets_url }}"
+        width="120"
+        height="40"
+        loading="eager"
+        alt="Milledoni"
+      >
+
+    </a>
+
     <nav class="main-nav">
       <ul>
         <li><a href="/cadeaus">Cadeaus</a></li>
@@ -17,28 +27,38 @@
 </header>
 
 {% if likedProducts.size > 0 %}
+
   <section id="wishlist" class="wishlist-grid">
 
     {% for product in likedProducts %}
       <div class="product-card small" id="wishlist-product-{{ product.id }}">
 
-        <img src="{{ product.image }}" alt="{{ product.name }}">
+        <!-- OPTIMISED IMAGE -->
+        <img
+          src="{{ product.image }}?width=400&quality=80&format=webp"
+          width="400"
+          height="400"
+          loading="lazy"
+          alt="{{ product.name }}"
+        >
+
         <h3>{{ product.name }}</h3>
         <p>€{{ product.amount }}</p>
 
-        <!-- REMOVE BUTTON -->
         <form action="/remove" method="POST" class="remove-form">
           <input type="hidden" name="product_id" value="{{ product.id }}">
 
           <button type="submit" class="remove-button">
-             Remove
+            Remove
           </button>
+
         </form>
 
       </div>
     {% endfor %}
 
   </section>
+
 {% else %}
   <p>Je hebt nog geen producten in je wishlist.</p>
 {% endif %}
