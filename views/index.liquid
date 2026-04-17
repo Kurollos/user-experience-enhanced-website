@@ -132,25 +132,7 @@
             <p class="prijs">€{{ product.amount }}</p>
 
             <p class="shop">
-              Shop: <a href="{{ product.shop_url }}" target="_blank">{{ product.shop_name }}</a>
-            </p>
-
-            <p class="spotter">
-
-              Spotter:
-
-              {% if product.spotter_img %}
-                <img
-                  src="{{ product.spotter_img }}"
-                  width="32"
-                  height="32"
-                  loading="lazy"
-                  alt="{{ product.spotter }}"
-                >
-              {% endif %}
-
-              {{ product.spotter }}
-
+              Perfect om iemand mee te verrassen <a href="{{ product.shop_url }}" target="_blank">{{ product.shop_name }}</a>
             </p>
 
             <a href="/product/{{ product.slug }}" class="button">Bekijk product</a>
