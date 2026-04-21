@@ -249,6 +249,76 @@ body {
   }
 }
 
+/* loading */
+.save-button.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* success check */
+.save-button.success::after {
+  content: "✔";
+  position: absolute;
+  font-size: 18px;
+  color: green;
+}
+
+/* popup bestaat al bij jou, maar check */
+.popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 20px;
+  border-radius: 10px;
+  color: white;
+  z-index: 9999;
+}
+
+.save-button.loading {
+  opacity: 0.6;
+  pointer-events: none;
+  position: relative;
+}
+
+/* simpele spinner */
+.save-button.loading::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-top-color: #000;
+  border-radius: 50%;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.save-button.error {
+  background-color: #ffdddd;
+  border: 2px solid #dc3545;
+}
+
+/* optioneel: shake effect */
+.save-button.error {
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
 /* =====================
    WISHLIST GRID
 ===================== */
