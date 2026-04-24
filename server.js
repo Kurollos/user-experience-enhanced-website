@@ -23,13 +23,21 @@ app.engine('liquid', engine.express());
 app.set('view engine', 'liquid');
 
 // ====================
-// GET ROUTE (PRODUCTEN)
+// GET ROUTE (PRODUCTEN + PAGINATION)
 // ====================
 app.get('/', async function (req, res) {
   const userId = 62;
 
+  // PAGINATION
+  const page = parseInt(req.query.page) || 1;
+  const limit = 12;
+  const offset = (page - 1) * limit;
+
   const params = {
-    fields: "id,name,image,amount"
+    fields: "id,name,image,amount",
+    limit: limit,
+    offset: offset,
+    meta: "filter_count"
   };
 
   // FILTERS
@@ -52,7 +60,7 @@ app.get('/', async function (req, res) {
   params["sort"] = "id";
 
   try {
-    //  producten ophalen
+    // PRODUCTEN OPHALEN (met pagination)
     const productResponse = await fetch(
       "https://fdnd-agency.directus.app/items/milledoni_products/?" +
       new URLSearchParams(params)
@@ -60,7 +68,11 @@ app.get('/', async function (req, res) {
 
     const productData = await productResponse.json();
 
-    //  wishlist ophalen
+    // TOTAAL AANTAL PRODUCTEN
+    const totalItems = productData.meta.filter_count;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    // WISHLIST OPHALEN
     const userResponse = await fetch(
       `https://fdnd-agency.directus.app/items/milledoni_users/${userId}/?fields=liked_products.milledoni_products_id.id`
     );
@@ -71,14 +83,16 @@ app.get('/', async function (req, res) {
       item => item.milledoni_products_id.id
     );
 
-    //  wishlist count
     const wishlistCount = likedProducts.length;
 
+    // RENDER
     res.render("index.liquid", {
       products: productData.data,
       likedProducts,
       wishlistCount,
-      status: req.query.status
+      status: req.query.status,
+      currentPage: page,
+      totalPages: totalPages
     });
 
   } catch (error) {
@@ -95,7 +109,6 @@ app.post('/like', async function (req, res) {
   const productId = req.body.product_id;
 
   try {
-    //  check duplicate
     const checkResponse = await fetch(
       `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1?filter[milledoni_users_id][_eq]=${userId}&filter[milledoni_products_id][_eq]=${productId}`
     );
@@ -106,7 +119,6 @@ app.post('/like', async function (req, res) {
       return res.redirect(303, '/?status=error');
     }
 
-    //  opslaan
     await fetch(
       "https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1",
       {
@@ -130,14 +142,13 @@ app.post('/like', async function (req, res) {
 });
 
 // ====================
-//  REMOVE ROUTE (NIEUW + FIX)
+// REMOVE ROUTE
 // ====================
 app.post('/remove', async function (req, res) {
   const userId = 62;
   const productId = req.body.product_id;
 
   try {
-    // zoek relation in pivot table
     const checkResponse = await fetch(
       `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1?filter[milledoni_users_id][_eq]=${userId}&filter[milledoni_products_id][_eq]=${productId}`
     );
@@ -150,7 +161,6 @@ app.post('/remove', async function (req, res) {
 
     const relationId = checkData.data[0].id;
 
-    // delete uit Directus
     await fetch(
       `https://fdnd-agency.directus.app/items/milledoni_users_milledoni_products_1/${relationId}`,
       {
