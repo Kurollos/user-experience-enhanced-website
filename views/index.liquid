@@ -7,7 +7,6 @@
 
   <!-- Preload CSS -->
   <link rel="preload" href="/style.css" as="style">
-  <!-- Apply CSS -->
   <link rel="stylesheet" href="/style.css">
 
   <script src="/script.js" defer></script>
@@ -75,6 +74,7 @@
 
         <button type="submit">Apply Filters</button>
       </form>
+
     </div>
 
     <!-- POPUPS -->
@@ -88,10 +88,13 @@
 
     <!-- PRODUCT GRID -->
     <section class="product-grid">
+
       {% for product in products %}
+
         {% assign img = product.img | default: product.image %}
 
         <article class="product-card">
+
           <section class="product-image">
             <img
               src="{{ img }}?width=600&quality=80&format=webp"
@@ -109,10 +112,12 @@
 
             <form action="/like" method="POST" class="save-form">
               <input type="hidden" name="product_id" value="{{ product.id }}">
+
               <button class="save-button" type="submit">
                 <img src="/button.png" width="40" height="40" alt="save">
               </button>
             </form>
+
           </section>
 
           <section class="product-info">
@@ -121,14 +126,38 @@
 
             <p class="shop">
               Perfect om iemand mee te verrassen
-              <a href="{{ product.shop_url }}" target="_blank">{{ product.shop_name }}</a>
+              <a href="{{ product.shop_url }}" target="_blank">
+                {{ product.shop_name }}
+              </a>
             </p>
 
-            <a href="/product/{{ product.slug }}" class="button">Bekijk product</a>
+            <a href="/product/{{ product.slug }}" class="button">
+              Bekijk product
+            </a>
           </section>
+
         </article>
+
       {% endfor %}
+
     </section>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+
+      {% if currentPage > 1 %}
+        <a href="/?page={{ currentPage | minus: 1 }}">&larr; Vorige</a>
+      {% endif %}
+
+      <span>
+        Pagina {{ currentPage }} van {{ totalPages }}
+      </span>
+
+      {% if currentPage < totalPages %}
+        <a href="/?page={{ currentPage | plus: 1 }}">Volgende &rarr;</a>
+      {% endif %}
+
+    </div>
 
   </section>
 </main>
