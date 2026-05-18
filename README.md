@@ -20,12 +20,15 @@ De nadruk lag op het optimaliseren van de performance en het toevoegen van een i
 Ik heb verschillende technieken toegepast om layout shifts te voorkomen, laadtijden te verkorten en de gebruikerservaring vloeiender te maken. 
 Daarnaast kunnen gebruikers nu cadeaus toevoegen aan hun favorieten via een like button, waarbij deze gegevens worden opgeslagen in een database en direct zichtbaar zijn in de interface.
 
+## Post Interactie
 <img width="959" height="476" alt="image" src="https://github.com/user-attachments/assets/b2cb7bab-9c70-4564-95f0-84d500d46b54" /> 
 <img width="959" height="442" alt="image" src="https://github.com/user-attachments/assets/5cb70c3e-6443-40b9-850f-1b0f081f3693" />
 <img width="958" height="476" alt="image" src="https://github.com/user-attachments/assets/d7e798e1-23d6-4205-a43f-4a1d294a0ded" />
 <img width="959" height="472" alt="image" src="https://github.com/user-attachments/assets/4e8a01a1-9152-411b-99c4-42ba0b5a4bbb" />
 <img width="959" height="440" alt="image" src="https://github.com/user-attachments/assets/06362e8f-6851-4742-b76c-da2ed16b9ad4" />
 <img width="959" height="440" alt="image" src="https://github.com/user-attachments/assets/2640346f-be24-4151-ad91-213fbeca1d88" />
+
+## Filter Interactie
 <img width="956" height="475" alt="image" src="https://github.com/user-attachments/assets/9c0ebaa5-f50a-4f69-9d7d-e942d8105930" />
 
 
