@@ -35,6 +35,8 @@ De website maakt het mogelijk voor gebruikers om door cadeaus te browsen en deze
 Tijdens deze interactie krijgt de gebruiker direct feedback in de vorm van een loading, success of error state. 
 Ook worden de favorieten direct bijgewerkt zonder dat de pagina opnieuw geladen hoeft te worden, wat zorgt voor een soepele gebruikerservaring.
 
+https://github.com/Kurollos/user-experience-enhanced-website/blob/4c951aa2c23d361438b54f52904635a2213cae0e/views/index.liquid#L80-L88
+
 ## Kenmerken
 De website bevat verschillende verbeteringen en functionaliteiten. Zo worden layout shifts voorkomen door het gebruik van vaste afmetingen voor afbeeldingen en componenten. De performance is verbeterd door technieken zoals lazy loading en responsive images met srcset. Daarnaast is er een interactieve wishlist functionaliteit toegevoegd die werkt met POST requests en gekoppeld is aan een database. Door het gebruik van JavaScript en fetch worden updates direct in de interface zichtbaar gemaakt. Tot slot zorgen duidelijke UI states ervoor dat de gebruiker altijd begrijpt wat er gebeurt tijdens een interactie.
 
