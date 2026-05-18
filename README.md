@@ -40,6 +40,8 @@ https://github.com/Kurollos/user-experience-enhanced-website/blob/4c951aa2c23d36
 ## Kenmerken
 De website bevat verschillende verbeteringen en functionaliteiten. Zo worden layout shifts voorkomen door het gebruik van vaste afmetingen voor afbeeldingen en componenten. De performance is verbeterd door technieken zoals lazy loading en responsive images met srcset. Daarnaast is er een interactieve wishlist functionaliteit toegevoegd die werkt met POST requests en gekoppeld is aan een database. Door het gebruik van JavaScript en fetch worden updates direct in de interface zichtbaar gemaakt. Tot slot zorgen duidelijke UI states ervoor dat de gebruiker altijd begrijpt wat er gebeurt tijdens een interactie.
 
+https://github.com/Kurollos/user-experience-enhanced-website/blob/fb8547c3456f9c0f287a71650d691e2cd6515fca/assets/script.js#L13-L24
+
 ## Installatie
 Om het project lokaal te gebruiken, moet eerst de repository worden gekloond. Vervolgens kan naar de juiste map worden genavigeerd en kunnen de benodigde dependencies worden geïnstalleerd. Daarna kan de server worden gestart, waarna de website lokaal te bekijken is.
 
